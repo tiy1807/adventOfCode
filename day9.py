@@ -26,12 +26,22 @@ for low_point in low_points:
         changed = False
         for point in basin:
             for proposed_new_point in [(point[0], point[1] - 1), (point[0], point[1] + 1), (point[0] - 1, point[1]), (point[0] + 1, point[1])]:
-                if proposed_new_point[0] > 0 and proposed_new_point[1] > 0 and proposed_new_point[0] < len(lines) - 1 and proposed_new_point[1] < len(lines[0]) - 1:
+                print("proposed: " + str(proposed_new_point))
+                if proposed_new_point[0] >= 0 and proposed_new_point[1] >= 0 and proposed_new_point[0] < len(lines) and proposed_new_point[1] < len(lines[0]):
                     if int(lines[proposed_new_point[0]][proposed_new_point[1]]) >= int(lines[point[0]][point[1]]) and int(lines[proposed_new_point[0]][proposed_new_point[1]]) != 9:
                         if proposed_new_point not in basin:
                             basin.append((proposed_new_point[0], proposed_new_point[1]))
                             changed = True
-        basins.append(basin)
+                            print("Added to basin")
+                        else:
+                            print("Already in basin")
+                    else:
+                        print("Lower than point")
+                else:
+                    print("Not in range")
+
+    print(basin)
+    basins.append(basin)
 size = [len(basin) for basin in basins]
 size.sort(reverse=True)
 print(size)
