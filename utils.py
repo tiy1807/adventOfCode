@@ -17,10 +17,18 @@ class Grid:
 
     def get_item(self, row, column):
         item = None
-        if len(self.grid) > row >= 0:
-            if len(self.grid[0]) > column >= 0:
-                item = self.grid[row][column]
+        if self.is_valid_point(row, column):
+            item = self.grid[row][column]
         return item
+
+    def is_valid_point(self, row, column):
+        return (len(self.grid) > row >= 0) and (len(self.grid[0]) > column >= 0)
+
+    def get_xy(self, coords):
+        return self.get_item(coords[1], coords[0])
+
+    def is_valid_xy(self, coords):
+        return self.is_valid_point(coords[1], coords[0])
 
     def size(self):
         return len(self.grid), len(self.grid[0])
@@ -33,6 +41,10 @@ class Grid:
         for row in self.grid:
             for item in row:
                 function(item)
+
+    def export_to_text(self, filename="output.csv"):
+        with open(filename, 'w') as f:
+            f.write(self.__repr__())
 
     def __repr__(self):
         return "\n".join(["".join([str(item) for item in row]) for row in self.grid])
